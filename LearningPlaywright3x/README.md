@@ -20,6 +20,9 @@ A learning repository tracking JavaScript fundamentals from first principles, al
   - [05.5 Increment and Decrement Operators](#055-increment-and-decrement-operators)
   - [05.6 Nullish Coalescing Operator](#056-nullish-coalescing-operator)
 - [06 Statements and Conditionals](#06-statements-and-conditionals)
+- [07 Switch Statements](#07-switch-statements)
+- [08 User Input](#08-user-input)
+- [09 Loops](#09-loops)
 - [IQ_Notes — Reference Library](#iq_notes--reference-library)
 
 ---
@@ -75,6 +78,35 @@ LearnPlaywright3x/
 │   ├── 37_IQ.js                              # if / else -> age gate
 │   ├── 38_IQ2.js                             # nested if -> drink-age check
 │   └── 38_Multiple_Condition.js              # else-if ladder -> score to grade
+├── 07_chapter_switch/
+│   ├── 39_Switch.js                          # basic switch statement and break
+│   ├── 40_IQ.js                              # deliberate fall-through example
+│   ├── 41_IQ2.js                             # switch with breaks and default
+│   ├── 42_REAL_API_Testing.js                # HTTP status-code branching
+│   ├── 43_Switch_Group.js                    # grouped browser cases
+│   ├── 44_IQ.js                              # string-case fall-through
+│   ├── 45_IQ2.js                             # switch(true) range matching
+│   ├── 46_IQ3.js                             # duplicate case behavior
+│   └── 47_IQ4.js                             # strict case matching
+├── 08_chapter_UserInputs/
+│   ├── README.md                             # input methods and run instructions
+│   ├── 48_JS.js                              # browser prompt input
+│   ├── 49_Node_UI.js                         # Node.js readline input
+│   ├── 50_Prompt.js                          # prompt-sync package input
+│   └── 51_Fs.js                              # stdin input with fs.readFileSync
+├── 09_chapter_Loops/
+│   ├── 52_Loop.js                            # repeated statements without a loop
+│   ├── 53_For_Loop.js                        # for-loop syntax and execution
+│   ├── 54_Increment.js                       # prefix increment review
+│   ├── 55_For_Loops.js                       # inclusive for-loop range
+│   ├── 56_For_Loops2.js                      # conditions inside a for loop
+│   ├── 57_While.js                           # equivalent for and while loops
+│   ├── 58_While.js                           # bounded retry loop
+│   ├── 59_Modie.js                           # while-loop repetition
+│   ├── 60_While_Vs_For.js                    # while(true) with break
+│   ├── 61_Do_While.js                        # do-while retry example
+│   ├── 62_DoWhile_vs_While.js                # first-run behavior comparison
+│   └── 63_NestedFor_lOOP.js                  # nested loops and index pairs
 └── IQ_Notes/
     ├── README.md                             # reusable prompt template for new IQ notes
     ├── Source_Code_ByteCODE_Binary_IQ.md      # source vs bytecode vs machine code
@@ -564,6 +596,88 @@ if (age > 18) {
 
 ---
 
+### 07 Switch Statements
+
+**Concept:** A `switch` compares one expression against multiple `case` values using strict equality. `break` stops execution after a match; without it, execution falls through into later cases.
+
+**Why:** A switch can make fixed-value branching clearer than a long `if / else if` chain. The chapter also covers grouped cases, `default`, deliberate fall-through, HTTP status codes, and the `switch (true)` range pattern.
+
+```js
+let responseCode = 404;
+
+switch (responseCode) {
+    case 200:
+        console.log("200 OK");
+        break;
+    case 404:
+        console.log("404 Not found!");
+        break;
+    default:
+        console.log("No status code matched");
+}
+```
+
+---
+
+### 08 User Input
+
+**Concept:** JavaScript input depends on its runtime. Browsers provide `prompt()`, while Node.js can use `readline`, third-party packages such as `prompt-sync`, or standard input through `fs.readFileSync(0, "utf8")`.
+
+**Important:** `readFileSync(0, "utf8")` waits until EOF. In an interactive macOS/Linux terminal, type the value, press Enter, and then press `Ctrl+D`. Use `readline` when the user should only need to press Enter.
+
+```js
+const readline = require("readline");
+
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+rl.question("Enter a number: ", (input) => {
+    console.log("Hi", Number(input));
+    rl.close();
+});
+```
+
+See [`08_chapter_UserInputs/README.md`](08_chapter_UserInputs/README.md) for a comparison of all four input methods and their run commands.
+
+---
+
+### 09 Loops
+
+**Concept:** Loops repeat a block of code while a condition remains true. This chapter progresses from manual repetition to `for`, `while`, and `do...while`, then covers `break` and nested loops.
+
+**Why:** Loops are useful for retry logic, iterating test data, repeating assertions, and processing collections. Choosing the right loop makes the stopping condition explicit and prevents accidental infinite execution.
+
+**Q&A — why use this?**
+- **Q: When should I use a `for` loop?** A: When the initialization, condition, and update are known up front, especially for a fixed number of iterations.
+- **Q: When should I use a `while` loop?** A: When repetition depends mainly on a condition, such as retrying until a limit or state change.
+- **Q: What makes `do...while` different?** A: Its body runs once before the condition is checked, so it always executes at least once.
+- **Q: What does `break` do?** A: It immediately exits the nearest loop.
+
+```js
+// Fixed number of iterations
+for (let i = 0; i < 3; i++) {
+    console.log(i);
+}
+
+// Condition-controlled repetition
+let attempts = 0;
+while (attempts < 3) {
+    console.log("Attempt", attempts);
+    attempts++;
+}
+
+// Always runs at least once
+let value = 10;
+do {
+    console.log(value);
+    value++;
+} while (value < 10);
+```
+
+---
+
 ## IQ_Notes — Reference Library
 
 Concept explainers, generated on demand via the prompt template in [`IQ_Notes/README.md`](IQ_Notes/README.md) — table breakdown, code walkthrough, pipeline diagram, TL;DR.
@@ -578,4 +692,4 @@ Concept explainers, generated on demand via the prompt template in [`IQ_Notes/RE
 
 ---
 
-> **TL;DR:** This repo is a from-scratch JavaScript fundamentals course (`console.log` → scoping → identifiers → literals/numbers → operators → statements/conditionals) plus a `00_chaptet_GENAI` folder for LLM automation-framework prompting, backed by an `IQ_Notes` library of standalone concept references anyone can regenerate with the same prompt template.
+> **TL;DR:** This repo is a from-scratch JavaScript fundamentals course (`console.log` → scoping → identifiers → literals/numbers → operators → conditionals → switch statements → user input → loops) plus a `00_chaptet_GENAI` folder for LLM automation-framework prompting, backed by an `IQ_Notes` library of standalone concept references anyone can regenerate with the same prompt template.
